@@ -1,0 +1,18 @@
+<?php
+
+namespace App\BehaviourPattern;
+
+class TaxCalculator
+{
+    public function calculate(Budget $budget, string $nameTax): float
+    {
+        switch ($nameTax) {
+            case "ICMS":
+                return $budget->value * 0.1;
+            case "ISS":
+                return $budget->value * 0.06;
+            default:
+                return 0;
+        }
+    }
+}
