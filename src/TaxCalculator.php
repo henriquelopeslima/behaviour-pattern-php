@@ -2,17 +2,12 @@
 
 namespace App\BehaviourPattern;
 
+use App\BehaviourPattern\Tax\Tax;
+
 class TaxCalculator
 {
-    public function calculate(Budget $budget, string $nameTax): float
+    public function calculate(Budget $budget, Tax $tax): float
     {
-        switch ($nameTax) {
-            case "ICMS":
-                return $budget->value * 0.1;
-            case "ISS":
-                return $budget->value * 0.06;
-            default:
-                return 0;
-        }
+        return $tax->calculateTax($budget);
     }
 }

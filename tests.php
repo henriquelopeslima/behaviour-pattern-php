@@ -10,4 +10,4 @@ $taxCalculator = new TaxCalculator();
 $budget = new Budget();
 $budget->value = 100;
 
-echo $taxCalculator->calculate($budget, "ICMS").PHP_EOL;
+echo $taxCalculator->calculate($budget, new \App\BehaviourPattern\Tax\Iss()).PHP_EOL;
