@@ -13,8 +13,8 @@ $budget->value = 100;
 
 echo "Iss: ".$taxCalculator->calculate($budget, new \App\BehaviourPattern\Tax\Iss()).PHP_EOL;
 
-$budget->value = 200;
-$budget->amountItems = 7;
+$budget->value = 600;
+$budget->amountItems = 5;
 
 $discountCalculator = new DiscountCalculator();
 

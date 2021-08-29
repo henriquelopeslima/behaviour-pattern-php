@@ -2,14 +2,20 @@
 
 namespace App\BehaviourPattern;
 
+use App\BehaviourPattern\Discounts\DiscountsEmpty;
+use App\BehaviourPattern\Discounts\DiscountsMoreFiftyDollars;
+use App\BehaviourPattern\Discounts\DiscountsMoreFiveItems;
+
 class DiscountCalculator
 {
     public function calculate(Budget $budget): float
     {
-        if ($budget->amountItems > 5) {
-            return $budget->value * 0.1;
-        }
-        
-        return 0;
+        $discountChain = new DiscountsMoreFiveItems(
+            new DiscountsMoreFiftyDollars(
+                new DiscountsEmpty()
+            )
+        );
+
+        return $discountChain->calculateDiscount($budget);
     }
 }
