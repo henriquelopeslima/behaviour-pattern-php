@@ -2,28 +2,36 @@
 
 namespace App\BehaviourPattern;
 
+use App\BehaviourPattern\StateBudget\OnApproval;
+use App\BehaviourPattern\StateBudget\StateBudget;
+
 class Budget {
     public int $amountItems;
     public float $value;
-    public string $stateCurrent;
+    public StateBudget $stateCurrent;
+
+    public function __construct()
+    {
+        $this->stateCurrent = new OnApproval();
+    }
 
     public function applyDiscountExtra()
     {
-        $this->value -= $this->calculateDiscountExtra();
+        $this->value -= $this->stateCurrent->calculateDiscountExtra($this);
     }
 
-    public function calculateDiscountExtra(): float
+    public function approve()
     {
-        if ($this->stateCurrent == 'ON_APPROVAL') {
-            return $this->value * 0.05;
-        }
+        $this->stateCurrent->approve($this);
+    }
 
-        if ($this->stateCurrent == 'APPROVED') {
-            return $this->value * 0.02;
-        }
+    public function reprove()
+    {
+        $this->stateCurrent->reprove($this);
+    }
 
-        throw  new \DomainException(
-            'Approved and finalized budgets cannot receive a discount'
-        );
+    public function finish()
+    {
+        $this->stateCurrent->finish($this);
     }
 }
