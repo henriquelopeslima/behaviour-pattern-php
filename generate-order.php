@@ -8,13 +8,5 @@ $valueBudget = $argv[1];
 $numberItems = $argv[2];
 $nameClient = $argv[3];
 
-$budget = new Budget();
-$budget->value = $valueBudget;
-$budget->amountItems = $numberItems;
-
-$order = new Order();
-$order->dateEnding = new DateTimeImmutable();
-$order->nameClient = $nameClient;
-$order->budget = $budget;
-
-echo "Created order".PHP_EOL;
+$generateOrder = new \App\BehaviourPattern\GenerateOrder($valueBudget, $numberItems, $nameClient);
+$generateOrder->exec();
