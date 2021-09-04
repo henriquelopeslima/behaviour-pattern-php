@@ -2,9 +2,7 @@
 
 namespace App\BehaviourPattern;
 
-use DateTimeImmutable;
-
-class GenerateOrder implements Command
+class GenerateOrder
 {
     private float $valueBudget;
     private int $numberItems;
@@ -17,16 +15,33 @@ class GenerateOrder implements Command
         $this->nameClient = $nameClient;
     }
 
-    public function exec(){
-        $budget = new Budget();
-        $budget->value = $this->valueBudget;
-        $budget->amountItems = $this->numberItems;
+    public function getValueBudget(): float
+    {
+        return $this->valueBudget;
+    }
 
-        $order = new Order();
-        $order->dateEnding = new DateTimeImmutable();
-        $order->nameClient = $this->nameClient;
-        $order->budget = $budget;
+    public function setValueBudget(float $valueBudget): void
+    {
+        $this->valueBudget = $valueBudget;
+    }
 
-        echo "Created order".PHP_EOL;
+    public function getNumberItems(): int
+    {
+        return $this->numberItems;
+    }
+
+    public function setNumberItems(int $numberItems): void
+    {
+        $this->numberItems = $numberItems;
+    }
+
+    public function getNameClient(): string
+    {
+        return $this->nameClient;
+    }
+
+    public function setNameClient(string $nameClient): void
+    {
+        $this->nameClient = $nameClient;
     }
 }

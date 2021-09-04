@@ -4,5 +4,5 @@ namespace App\BehaviourPattern;
 
 interface Command
 {
-    public function exec();
+    public function exec(GenerateOrder $generateOrder);
 }

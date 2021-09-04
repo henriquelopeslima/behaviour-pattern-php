@@ -9,4 +9,5 @@ $numberItems = $argv[2];
 $nameClient = $argv[3];
 
 $generateOrder = new \App\BehaviourPattern\GenerateOrder($valueBudget, $numberItems, $nameClient);
-$generateOrder->exec();
+$generateOrderHandler = new \App\BehaviourPattern\GenerateOrderHandler();
+$generateOrderHandler->exec($generateOrder);
