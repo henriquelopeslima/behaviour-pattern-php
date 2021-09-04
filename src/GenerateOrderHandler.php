@@ -2,6 +2,7 @@
 
 namespace App\BehaviourPattern;
 
+use App\BehaviourPattern\ActionsWhenGeneratingOrder\{CreateOrderInBank, LogGenerateOrder, SendOrderByEmail};
 use DateTimeImmutable;
 
 class GenerateOrderHandler implements Command
@@ -16,6 +17,12 @@ class GenerateOrderHandler implements Command
         $order->nameClient = $generateOrder->getNameClient();
         $order->budget = $budget;
 
-        echo "Created order".PHP_EOL;
+        $ordersRepository = new CreateOrderInBank();
+        $logGenerateOrder = new LogGenerateOrder();
+        $sendOrderEmail = new SendOrderByEmail();
+
+        $ordersRepository->execAction($order);
+        $logGenerateOrder->execAction($order);
+        $sendOrderEmail->execAction($order);
     }
 }
