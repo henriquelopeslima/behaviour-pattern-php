@@ -2,11 +2,18 @@
 
 namespace App\BehaviourPattern;
 
-use App\BehaviourPattern\ActionsWhenGeneratingOrder\{CreateOrderInBank, LogGenerateOrder, SendOrderByEmail};
+use App\BehaviourPattern\ActionsWhenGeneratingOrder\ActionsWhenGeneratingOrder;
 use DateTimeImmutable;
 
 class GenerateOrderHandler implements Command
 {
+    /** @var ActionsWhenGeneratingOrder[] */
+    private array $actionsBeforeGenerateOrder = [];
+
+    public function addActionBeforeGenerateOrder(ActionsWhenGeneratingOrder $action) {
+        $this->actionsBeforeGenerateOrder[] = $action;
+    }
+
     public function exec(GenerateOrder $generateOrder){
         $budget = new Budget();
         $budget->value = $generateOrder->getValueBudget();
@@ -17,12 +24,8 @@ class GenerateOrderHandler implements Command
         $order->nameClient = $generateOrder->getNameClient();
         $order->budget = $budget;
 
-        $ordersRepository = new CreateOrderInBank();
-        $logGenerateOrder = new LogGenerateOrder();
-        $sendOrderEmail = new SendOrderByEmail();
-
-        $ordersRepository->execAction($order);
-        $logGenerateOrder->execAction($order);
-        $sendOrderEmail->execAction($order);
+        foreach ($this->actionsBeforeGenerateOrder as $action) {
+            $action->execAction($order);
+        }
     }
 }

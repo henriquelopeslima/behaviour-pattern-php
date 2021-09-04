@@ -4,9 +4,9 @@ namespace App\BehaviourPattern\ActionsWhenGeneratingOrder;
 
 use App\BehaviourPattern\Order;
 
-class LogGenerateOrder
+class LogGenerateOrder implements  ActionsWhenGeneratingOrder
 {
     public function execAction(Order $order) {
-        echo "Created log for generate order in bank";
+        echo "Created log for generate order in bank".PHP_EOL;
     }
 }
