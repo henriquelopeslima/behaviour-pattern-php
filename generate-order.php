@@ -11,7 +11,7 @@ $nameClient = $argv[3];
 
 $generateOrder = new \App\BehaviourPattern\GenerateOrder($valueBudget, $numberItems, $nameClient);
 $generateOrderHandler = new \App\BehaviourPattern\GenerateOrderHandler();
-$generateOrderHandler->addActionBeforeGenerateOrder(new CreateOrderInBank());
-$generateOrderHandler->addActionBeforeGenerateOrder(new LogGenerateOrder());
-$generateOrderHandler->addActionBeforeGenerateOrder(new SendOrderByEmail());
+$generateOrderHandler->attach(new CreateOrderInBank());
+$generateOrderHandler->attach(new LogGenerateOrder());
+$generateOrderHandler->attach(new SendOrderByEmail());
 $generateOrderHandler->exec($generateOrder);

@@ -2,11 +2,12 @@
 
 namespace App\BehaviourPattern\ActionsWhenGeneratingOrder;
 
-use App\BehaviourPattern\Order;
+use SplObserver;
+use SplSubject;
 
-class CreateOrderInBank implements ActionsWhenGeneratingOrder
+class CreateOrderInBank implements SplObserver
 {
-    public function execAction(Order $order) {
+    public function update(SplSubject $subject) {
         echo "Created order in bank".PHP_EOL;
     }
 }

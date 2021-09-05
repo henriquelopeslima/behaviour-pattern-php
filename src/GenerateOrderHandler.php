@@ -4,11 +4,14 @@ namespace App\BehaviourPattern;
 
 use App\BehaviourPattern\ActionsWhenGeneratingOrder\ActionsWhenGeneratingOrder;
 use DateTimeImmutable;
+use SplObserver;
+use SplSubject;
 
-class GenerateOrderHandler implements Command
+class GenerateOrderHandler implements SplSubject
 {
-    /** @var ActionsWhenGeneratingOrder[] */
+    /** @var SplObserver[] */
     private array $actionsBeforeGenerateOrder = [];
+    public Order $order;
 
     public function addActionBeforeGenerateOrder(ActionsWhenGeneratingOrder $action) {
         $this->actionsBeforeGenerateOrder[] = $action;
@@ -24,8 +27,25 @@ class GenerateOrderHandler implements Command
         $order->nameClient = $generateOrder->getNameClient();
         $order->budget = $budget;
 
+        $this->order = $order;
+        $this->notify();
+    }
+
+    public function attach(SplObserver $observer)
+    {
+        $this->actionsBeforeGenerateOrder[] = $observer;
+    }
+
+    public function detach(SplObserver $observer)
+    {
+        // TODO: Implement detach() method.
+    }
+
+    public function notify()
+    {
+        // TODO: Implement notify() method.
         foreach ($this->actionsBeforeGenerateOrder as $action) {
-            $action->execAction($order);
+            $action->update($this);
         }
     }
 }
