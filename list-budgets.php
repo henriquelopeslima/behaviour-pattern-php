@@ -33,3 +33,12 @@ foreach ($listBudgets as $budget) {
     echo "Amount items ".$budget->amountItems.PHP_EOL;
     echo PHP_EOL;
 }
+
+echo "Filter by state finished".PHP_EOL;
+
+foreach ($listBudgets->budgetsFinishers() as $budget) {
+    echo "Value ".$budget->value.PHP_EOL;
+    echo "State ".get_class($budget->stateCurrent).PHP_EOL;
+    echo "Amount items ".$budget->amountItems.PHP_EOL;
+    echo PHP_EOL;
+}

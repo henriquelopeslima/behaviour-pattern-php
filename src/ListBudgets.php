@@ -2,6 +2,7 @@
 
 namespace App\BehaviourPattern;
 
+use App\BehaviourPattern\StateBudget\Finished;
 use IteratorAggregate;
 
 class ListBudgets implements IteratorAggregate
@@ -27,5 +28,13 @@ class ListBudgets implements IteratorAggregate
     public function getIterator(): iterable
     {
         return new \ArrayIterator($this->budgets);
+    }
+
+    public function budgetsFinishers(): array
+    {
+        return array_filter(
+            $this->budgets,
+            fn (Budget $budget) => $budget->stateCurrent instanceof Finished
+        );
     }
 }
